@@ -102,6 +102,17 @@ app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);
 app.use("/",userRouter);
 
+app.get('/dev/reset-password', async (req, res) => {
+  const user = await User.findOne({ email: 'jane@gmail.com' }); // or use username if needed
+  if (!user) return res.send('User not found.');
+
+  await user.setPassword('newpassword123'); // ✅ this sets salt & hash properly
+  await user.save();
+
+  res.send('Password reset successfully to: newpassword123');
+});
+
+
 app.all("*",(req,res,next)=>
 {
     next(new ExpressError(404,"Page Not Found!"));
