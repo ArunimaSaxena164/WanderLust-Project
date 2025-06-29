@@ -103,15 +103,7 @@ app.use("/listings/:id/reviews",reviewRouter);
 app.use("/",userRouter);
 
 
-app.get('/dev/reset-password', async (req, res) => {
-  const user = await User.findOne({ email: 'jane@gmail.com' });
-  if (!user) return res.send('User not found.');
 
-  await user.setPassword('newpassword123'); // Set new working password
-  await user.save();
-
-  res.send('Password reset successfully to: newpassword123');
-});
 
 
 app.all("*",(req,res,next)=>
